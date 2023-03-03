@@ -2,6 +2,9 @@ import requests
 import os
 import urllib
 from bs4 import BeautifulSoup as BS
+import PIL
+# Import scripts
+import creating_acsii
 
 request_titles = requests.get("https://southpark.fandom.com/wiki/Portal:Characters")
 html_titles = BS(request_titles.content, "html.parser")
@@ -25,6 +28,13 @@ def all_names(name):
                     return searching_specs(name)
 
 
+# Cropping image for suitable size
+def cropping_image(path):
+    crop_path = PIL.Image.open(path)
+    crop = crop_path.resize((100, 200))
+    crop.save(path)
+
+
 # Parsing specs
 def searching_specs(character):
     title = character.replace(" ", "_")
@@ -43,10 +53,17 @@ def searching_specs(character):
 
         image = img_html['src']
         image_name = img_html['data-image-name']
-        image_path = directory + "/" + image_name + ".png"
+        image_path = directory + "/" + image_name
 
         if not os.path.exists(image_path):
             urllib.request.urlretrieve(image, image_path)
+            cropping_image(image_path)
+
+        ascii_path = creating_acsii.main(title, image_path, image_name)
+
+        with open(ascii_path) as ascii_txt:
+            ascii = ascii_txt.read()
+            print(ascii + "\n")
 
     for el in html.select("section.pi-item > div.pi-item"):
         title_specs = el.select('h3')
@@ -57,4 +74,4 @@ def searching_specs(character):
     print("\n")
 
 
-all_names("Adolf Hitler")
+all_names("9th Grader with Purple Shirt")
