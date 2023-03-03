@@ -12,12 +12,10 @@ html_titles = BS(request_titles.content, "html.parser")
 
 # Parsing names of all characters
 def all_names(name):
-    counter = 0
+
     for i in range(0, 30):
         for galary in html_titles.select('#mw-content-text'):
             for title in galary.select("#gallery-" + str(i) + " .wikia-gallery-item"):
-
-                counter += 1
 
                 if title.find("i"):
                     character = title.select('.lightbox-caption > i > a')
