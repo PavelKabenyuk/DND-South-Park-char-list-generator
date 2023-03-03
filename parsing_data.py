@@ -31,7 +31,7 @@ def all_names(name):
 # Cropping image for suitable size
 def cropping_image(path):
     crop_path = PIL.Image.open(path)
-    crop = crop_path.resize((100, 200))
+    crop = crop_path.resize((200, 200))
     crop.save(path)
 
 
@@ -74,4 +74,5 @@ def searching_specs(character):
     print("\n")
 
 
-all_names("9th Grader with Purple Shirt")
+name = input("> ")
+all_names(name)
