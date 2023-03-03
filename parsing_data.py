@@ -8,11 +8,11 @@ import creating_acsii
 
 request_titles = requests.get("https://southpark.fandom.com/wiki/Portal:Characters")
 html_titles = BS(request_titles.content, "html.parser")
-
+#todo: Make some refactoring about vars and imports, diverse program with files (make main.py)
 
 # Parsing names of all characters
 def all_names(name):
-
+    #todo Optimize searching with estimating first letter of name.
     for i in range(0, 30):
         for galary in html_titles.select('#mw-content-text'):
             for title in galary.select("#gallery-" + str(i) + " .wikia-gallery-item"):
@@ -25,9 +25,12 @@ def all_names(name):
                 if name == character[0].text:
                     return searching_specs(name)
 
+    print("Character doesn't exist, try again!")
+
 
 # Cropping image for suitable size
 def cropping_image(path):
+    #todo Need to check size of non-cropped element and then crop it with estimating it (bad example: 6th Graders Bruisers, Beth (Dawg's Bitch)
     crop_path = PIL.Image.open(path)
     crop = crop_path.resize((200, 200))
     crop.save(path)
