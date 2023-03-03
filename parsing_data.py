@@ -73,6 +73,6 @@ def searching_specs(character):
 
     print("\n")
 
-
-name = input("> ")
-all_names(name)
+while True:
+    name = input("> ")
+    all_names(name)
