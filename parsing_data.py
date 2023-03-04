@@ -22,24 +22,24 @@ letters = {'main_characters': 0,
 
 # Cropping image for suitable size
 def cropping_image(path):
-    # todo Need to check size of non-cropped element and then crop it with estimating it (bad example: 6th Graders
-    #  Bruisers, Beth (Dawg's Bitch)
     image = PIL.Image.open(path)
-    width, height = image.size
+    origin_width, origin_height = image.size
 
-    koef = width/height
+    ratio = origin_width/origin_height
 
-    if koef < 1:
-        print(1)
-        image_cropped = image.resize((100, 100))
+    if ratio < 1:
+        width = int(200 * ratio)
+        height = 200
     else:
-        image_cropped = image.resize((100, 100))
+        width = 200
+        height = int(200 * 1/ratio)
 
+    image_cropped = image.resize((width, height))
     image_cropped.save(path)
 
 
 # Parsing certain group
-def parsing_group(symbol):
+def parsing_group(symbol, name):
     for galary in html_titles.select('#mw-content-text'):
         for title in galary.select("#gallery-" + str(symbol) + " .wikia-gallery-item"):
 
@@ -59,10 +59,10 @@ def all_names(name):
 
     if not str(name[0]).isnumeric():
         letter = letters[name[0].lower()]
-        if parsing_group(letter) == False:
+        if parsing_group(letter, name) == False:
             print("Character doesn't exist, try again!")
     else:
-        if parsing_group(letters['#']) == False:
+        if parsing_group(letters['#'], name) == False:
             print("Character doesn't exist, try again!")
 
 
