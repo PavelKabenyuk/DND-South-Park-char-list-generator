@@ -17,11 +17,12 @@ letters = {'main_characters': 0,
            'q': 17, 'r': 18, 's': 19, 't': 20,
            'u': 21, 'v': 22, 'w': 23, 'x': 24,
            'y': 25, 'z': 26, "#": 27}
-specs_array = {}
-ascii_array = []
 
 
 def main(title="title"):
+
+    specs_array = {}
+    ascii_array = []
 
     # Parsing certain group
     def parsing_group(symbol="letter", target_title="title"):
@@ -46,6 +47,7 @@ def main(title="title"):
         request = requests.get("https://southpark.fandom.com/wiki/" + title)
         html = BS(request.content, "html.parser")
 
+        # Parsing images
         for img_html in html.select("figure.pi-image > a > img"):
             current_directory = os.getcwd()
             directory = os.path.join(current_directory, "data/images", "characters", title)
@@ -66,6 +68,7 @@ def main(title="title"):
             if ascii_path not in ascii_array:
                 ascii_array.append(ascii_path)
 
+        # Parsing specs
         for el in html.select("section.pi-item > div.pi-item"):
             title_specs = el.select('h3')
             value_specs = el.select('div.pi-font')
