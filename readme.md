@@ -2,6 +2,10 @@
 
 You can create a char-list for role play game: Dungeons and Dragons with actual characters from South Park
 
+## Features
+Current version of program provides to receive main information of any character in south park and ascii versions
+of this character.
+
 ## Getting started
 
 ### Downloading
